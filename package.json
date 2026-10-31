@@ -1,0 +1,13 @@
+{
+  "name": "jashn-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix app_build run dev",
+    "build": "npm --prefix app_build run build",
+    "start": "npm --prefix app_build run start",
+    "test": "npm --prefix app_build test",
+    "lint": "npm --prefix app_build run lint",
+    "typecheck": "npm --prefix app_build run typecheck"
+  }
+}
+

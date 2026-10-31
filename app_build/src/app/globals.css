@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --background: #faf7f2;
+  --foreground: #1f1610;
+  --card: #ffffff;
+  --card-foreground: #1f1610;
+  --surface: #ffffff;
+  --surface-muted: #f2ebe1;
+  --accent: #b45309;
+  --accent-foreground: #ffffff;
+  --muted: #f5efe6;
+  --muted-foreground: #635347;
+  --border: #e8ded1;
+  --ring: #b45309;
+  --marigold: #d97706;
+  --vermilion: #b91c1c;
+  --rose: #9d174d;
+  --peacock: #0f766e;
+  --leaf: #15803d;
+  --plum: #4a0e4e;
+  --gold: #b48310;
+  --event-primary: #b45309;
+  --event-secondary: #0f766e;
+  --event-tertiary: #9d174d;
+}
+
+.dark {
+  --background: #160d1f;
+  --foreground: #faf5ee;
+  --card: #231631;
+  --card-foreground: #faf5ee;
+  --surface: #231631;
+  --surface-muted: #2f1d41;
+  --accent: #f5b738;
+  --accent-foreground: #160d1f;
+  --muted: #281938;
+  --muted-foreground: #c5b6cf;
+  --border: #3b2450;
+  --ring: #f5b738;
+  --marigold: #fbbf24;
+  --vermilion: #f87171;
+  --rose: #fb7185;
+  --peacock: #2dd4bf;
+  --leaf: #4ade80;
+  --plum: #a21caf;
+  --gold: #f5b738;
+  --event-primary: #f5b738;
+  --event-secondary: #2dd4bf;
+  --event-tertiary: #fb7185;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #160d1f;
+    --foreground: #faf5ee;
+    --card: #231631;
+    --card-foreground: #faf5ee;
+    --surface: #231631;
+    --surface-muted: #2f1d41;
+    --accent: #f5b738;
+    --accent-foreground: #160d1f;
+    --muted: #281938;
+    --muted-foreground: #c5b6cf;
+    --border: #3b2450;
+    --ring: #f5b738;
+    --marigold: #fbbf24;
+    --vermilion: #f87171;
+    --rose: #fb7185;
+    --peacock: #2dd4bf;
+    --leaf: #4ade80;
+    --plum: #a21caf;
+    --gold: #f5b738;
+    --event-primary: #f5b738;
+    --event-secondary: #2dd4bf;
+    --event-tertiary: #fb7185;
+  }
+}
+
+[data-theme="wedding"] {
+  --event-primary: #9d174d;
+  --event-secondary: #b48310;
+  --event-tertiary: #b91c1c;
+  --accent: #9d174d;
+  --accent-foreground: #ffffff;
+}
+
+.dark [data-theme="wedding"],
+:root:not(.light) [data-theme="wedding"] {
+  --event-primary: #fb7185;
+  --event-secondary: #f5b738;
+  --event-tertiary: #f87171;
+  --accent: #f5b738;
+  --accent-foreground: #160d1f;
+}
+
+[data-theme="birthday"] {
+  --event-primary: #c2410c;
+  --event-secondary: #0f766e;
+  --event-tertiary: #b48310;
+  --accent: #c2410c;
+  --accent-foreground: #ffffff;
+}
+
+.dark [data-theme="birthday"],
+:root:not(.light) [data-theme="birthday"] {
+  --event-primary: #fb923c;
+  --event-secondary: #2dd4bf;
+  --event-tertiary: #f5b738;
+  --accent: #fb923c;
+  --accent-foreground: #160d1f;
+}
+
+[data-theme="community"] {
+  --event-primary: #b45309;
+  --event-secondary: #0f766e;
+  --event-tertiary: #15803d;
+  --accent: #0f766e;
+  --accent-foreground: #ffffff;
+}
+
+.dark [data-theme="community"],
+:root:not(.light) [data-theme="community"] {
+  --event-primary: #f59e0b;
+  --event-secondary: #2dd4bf;
+  --event-tertiary: #4ade80;
+  --accent: #2dd4bf;
+  --accent-foreground: #160d1f;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
