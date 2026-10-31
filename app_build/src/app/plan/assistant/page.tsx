@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
@@ -17,8 +18,14 @@ const AssistantChat = dynamic(
   }
 );
 
+const CelebrationBurst = dynamic(
+  () => import("@/components/celebration-burst").then((m) => m.CelebrationBurst),
+  { ssr: false }
+);
+
 export default function PlanAssistantPage() {
   const { plan, updatePlan } = usePlan();
+  const [showBurst, setShowBurst] = useState(false);
   if (!plan) return null;
 
   return (
@@ -28,6 +35,7 @@ export default function PlanAssistantPage() {
       transition={{ duration: 0.2 }}
       className="space-y-6"
     >
+      {showBurst && <CelebrationBurst onComplete={() => setShowBurst(false)} />}
       <div className="space-y-1">
         <h1 className="text-2xl font-serif font-bold text-[var(--foreground)]">
           Planning Assistant & Action Center
@@ -36,7 +44,11 @@ export default function PlanAssistantPage() {
           Discuss changes with the celebration assistant. Proposed actions must be confirmed with the Apply button.
         </p>
       </div>
-      <AssistantChat plan={plan} onUpdatePlan={updatePlan} />
+      <AssistantChat
+        plan={plan}
+        onUpdatePlan={updatePlan}
+        onApplyAction={() => setShowBurst(true)}
+      />
     </motion.div>
   );
 }

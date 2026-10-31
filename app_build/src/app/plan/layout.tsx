@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { PlusCircle, Calendar, Users, Wallet } from "lucide-react";
 import { ExportMenu } from "@/components/export-menu";
@@ -8,8 +10,31 @@ import { PlanNav } from "@/components/plan-nav";
 import { usePlan } from "@/hooks/use-plan";
 import { formatDate, formatInr } from "@/lib/format";
 
+const CelebrationBurst = dynamic(
+  () => import("@/components/celebration-burst").then((m) => m.CelebrationBurst),
+  { ssr: false }
+);
+
 export default function PlanLayout({ children }: { children: React.ReactNode }) {
   const { plan } = usePlan();
+  const [showBurst, setShowBurst] = useState(false);
+  const wasCompleteRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.search.includes("burst=sample")) {
+      setShowBurst(true);
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!plan || plan.tasks.length === 0) return;
+    const isComplete = plan.tasks.every((t) => t.done);
+    if (isComplete && !wasCompleteRef.current) {
+      setShowBurst(true);
+    }
+    wasCompleteRef.current = isComplete;
+  }, [plan]);
 
   if (!plan) {
     return (
@@ -41,6 +66,7 @@ export default function PlanLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div data-theme={plan.intake.preset} className="space-y-4 pb-16">
+      {showBurst && <CelebrationBurst onComplete={() => setShowBurst(false)} />}
       <div className="border-b border-[var(--border)] bg-[var(--card)]/90 backdrop-blur-xs py-6 px-4">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
