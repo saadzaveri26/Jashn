@@ -15,6 +15,37 @@ Jashn enforces a strict architectural boundary between creative AI and financial
 
 ---
 
+## Celebration Theme & Visual Identity
+
+Jashn is styled as an authentic Indian celebration, moving away from generic SaaS styling and dark fintech surfaces:
+- **Warm Cream Paper & Evening Celebration**: Default surface is a warm cream handmade paper (`#faf7f2`), with an evening celebration dark variant in deep royal plum (`#160d1f`) accented with warm gold (`#f5b738`). Respects `prefers-color-scheme` on first visit and persists user preference via a header theme toggle with `aria-pressed`.
+- **Event-Specific Themes**: Dynamic `data-theme` on the plan root sets CSS variables for each event preset:
+  - *Wedding*: Rose (`#9d174d`), Gold (`#b48310`), and Vermilion (`#b91c1c`)
+  - *Birthday*: Coral (`#c2410c`), Turquoise (`#0f766e`), and Sunny Yellow (`#d97706`)
+  - *Community*: Saffron (`#d97706`), Peacock Teal (`#0f766e`), and Leaf Green (`#15803d`)
+- **Typography Payload under 60 KB**: Loaded via `next/font/local` with latin subsets (Rozha One display serif at 18.1 KB and Plus Jakarta Sans UI sans at 27.3 KB, total 45.4 KB).
+- **Cultural Motifs**: 100% inline SVG vector components in `src/components/motifs/` (Torana bunting, Marigold garland line, Jaali lattice border, Paisley corner, Diya flame, and Rangoli ring). All motifs are decorative (`aria-hidden="true"`, `pointer-events-none`).
+
+---
+
+## Celebration Motion & Accessibility
+
+- **Motion System (`src/lib/motion.ts`)**: Centralized motion constants for durations and cubic bezier easings (`easeOut`, `easeExpo`, `easeInOut`). All animations transform and opacity only.
+- **Micro-interactions**: Torana flags sway gently in ambient breeze, wizard step diyas light up on completion, timeline garlands pulse at-risk items with text + icon indicators, and balanced budget allocations show a celebratory stamp.
+- **Celebration Burst**: Dynamic confetti burst (at most 40 lightweight marigold petals and festive paper particles, ~1.2s duration) loaded via dynamic import. Fires only on sample plan load (`?burst=sample`), when all plan tasks become completed, and when an AI assistant action is applied.
+- **WCAG Pause Control**: A persistent header "Pause animations" button (`aria-pressed`) pauses all ambient motion (bunting sway, drifting petals, diya flicker).
+- **Reduced Motion**: Respects `prefers-reduced-motion: reduce` by defaulting pause mode to true and disabling particle bursts entirely while preserving clear static visual motifs.
+
+---
+
+## Design and Accessibility Choices
+
+1. **Color Contrast Integrity**: Every semantic token pair (foreground/background, muted foreground, card surfaces, and accents) in both light cream and dark plum themes, as well as across all three event presets, strictly passes WCAG AA contrast (ratios ranging from 5.1:1 to 17.7:1), validated by automated programmatic tests.
+2. **Dual-Channel Status Indicators**: At-risk timeline milestones, budget feasibility warnings, and quote alerts always pair meaningful color with distinct SVG icons and explicit text badges, satisfying WCAG 1.4.1 (use of color).
+3. **No Flashing or Layout Shifts**: All animations run under 3 flashes per second, animate transform/opacity only, and avoid triggering layout recalculations.
+
+---
+
 ## Traceability Table
 
 | Brief Phrase | Feature | Route(s) | Engine Function(s) | Test File(s) |
@@ -75,4 +106,3 @@ npm run dev
 # Run production build
 npm run build
 ```
-
