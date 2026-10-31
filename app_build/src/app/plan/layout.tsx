@@ -14,23 +14,23 @@ export default function PlanLayout({ children }: { children: React.ReactNode }) 
   if (!plan) {
     return (
       <div className="py-20 px-4 text-center max-w-md mx-auto space-y-4">
-        <h1 className="text-2xl font-serif font-bold text-stone-900 dark:text-stone-50">
+        <h1 className="text-2xl font-serif font-bold text-[var(--foreground)]">
           No Active Plan Found
         </h1>
-        <p className="text-sm text-stone-600 dark:text-stone-400">
+        <p className="text-sm text-[var(--muted-foreground)]">
           Start a new plan or load our verified wedding sample to begin organizing.
         </p>
         <div className="flex justify-center gap-3 pt-2">
           <Link
             href="/new"
-            className="min-h-[44px] px-4 py-2 text-sm font-medium rounded-md bg-amber-700 text-amber-50 hover:bg-amber-800 transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600 font-semibold"
+            className="min-h-[44px] px-4 py-2 text-sm font-semibold rounded-md bg-[var(--accent)] text-[var(--accent-foreground)] hover:opacity-90 transition-opacity flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           >
             <PlusCircle className="w-4 h-4" aria-hidden="true" />
             <span>Create Plan</span>
           </Link>
           <Link
             href="/sample"
-            className="min-h-[44px] px-4 py-2 text-sm font-medium rounded-md border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 hover:bg-stone-50 transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-amber-600"
+            className="min-h-[44px] px-4 py-2 text-sm font-medium rounded-md border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:bg-[var(--surface-muted)] transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           >
             <span>Load Sample</span>
           </Link>
@@ -41,19 +41,19 @@ export default function PlanLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div data-theme={plan.intake.preset} className="space-y-4 pb-16">
-      <div className="border-b border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/60 py-6 px-4">
+      <div className="border-b border-[var(--border)] bg-[var(--card)]/90 backdrop-blur-xs py-6 px-4">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300">
+              <span className="text-xs font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[var(--surface-muted)] text-[var(--accent)] border border-[var(--border)]">
                 {plan.intake.preset}
               </span>
               {plan.feasibility && <FeasibilityBadge verdict={plan.feasibility} />}
             </div>
-            <p className="text-2xl font-serif font-bold text-stone-900 dark:text-stone-50">
+            <p className="text-2xl font-serif font-bold text-[var(--foreground)]">
               {plan.intake.eventName}
             </p>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-stone-500 dark:text-stone-400 pt-1">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--muted-foreground)] pt-1">
               <span className="flex items-center gap-1">
                 <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
                 {formatDate(plan.intake.eventDate)}
@@ -82,4 +82,3 @@ export default function PlanLayout({ children }: { children: React.ReactNode }) 
     </div>
   );
 }
-

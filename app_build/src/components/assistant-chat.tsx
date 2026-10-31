@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Bot, User, Loader2 } from "lucide-react";
+import { Send, Bot, User } from "lucide-react";
 import { applyAction } from "@/engine/actions";
 import type { Action, AssistantResponse, Plan } from "@/engine/schemas";
 import { ActionCard } from "./action-card";
+import { Diya } from "./motifs";
 
 type ChatItem = {
   role: "user" | "assistant";
@@ -15,9 +16,10 @@ type ChatItem = {
 type Props = {
   plan: Plan;
   onUpdatePlan: (p: Plan) => void;
+  onApplyAction?: () => void;
 };
 
-export function AssistantChat({ plan, onUpdatePlan }: Props) {
+export function AssistantChat({ plan, onUpdatePlan, onApplyAction }: Props) {
   const [messages, setMessages] = useState<ChatItem[]>([
     {
       role: "assistant",
@@ -63,6 +65,7 @@ export function AssistantChat({ plan, onUpdatePlan }: Props) {
     if (res.ok) {
       setErrorMsg(null);
       onUpdatePlan(res.plan);
+      onApplyAction?.();
     } else {
       setErrorMsg(`Cannot apply action: ${res.reason}`);
     }
@@ -78,19 +81,19 @@ export function AssistantChat({ plan, onUpdatePlan }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-[520px] rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 overflow-hidden shadow-2xs">
+    <div className="flex flex-col h-[520px] rounded-lg border border-[var(--border)] bg-[var(--card)] overflow-hidden shadow-xs">
       <div className="flex-1 p-4 overflow-y-auto space-y-4">
         {messages.map((m, idx) => (
           <div key={idx} className={`flex gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
             {m.role === "assistant" && (
-              <div className="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-950 flex items-center justify-center shrink-0">
-                <Bot className="w-4 h-4 text-amber-700 dark:text-amber-400" aria-hidden="true" />
+              <div className="w-7 h-7 rounded-full bg-[var(--surface-muted)] flex items-center justify-center shrink-0">
+                <Bot className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />
               </div>
             )}
             <div className={`max-w-[85%] rounded-lg p-3 text-sm ${
               m.role === "user"
-                ? "bg-amber-700 text-amber-50 dark:bg-amber-600"
-                : "bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-100"
+                ? "bg-[var(--accent)] text-[var(--accent-foreground)]"
+                : "bg-[var(--surface-muted)] text-[var(--foreground)]"
             }`}>
               <p className="whitespace-pre-wrap">{m.text}</p>
               {m.actions?.map((act, actIdx) => (
@@ -103,26 +106,30 @@ export function AssistantChat({ plan, onUpdatePlan }: Props) {
               ))}
             </div>
             {m.role === "user" && (
-              <div className="w-7 h-7 rounded-full bg-stone-200 dark:bg-stone-700 flex items-center justify-center shrink-0">
-                <User className="w-4 h-4 text-stone-700 dark:text-stone-300" aria-hidden="true" />
+              <div className="w-7 h-7 rounded-full bg-[var(--surface-muted)] flex items-center justify-center shrink-0">
+                <User className="w-4 h-4 text-[var(--foreground)]" aria-hidden="true" />
               </div>
             )}
           </div>
         ))}
         {loading && (
-          <div role="status" aria-live="polite" className="flex items-center gap-2 text-stone-500 text-xs">
-            <Loader2 className="w-4 h-4 animate-spin text-amber-600" aria-hidden="true" />
+          <div role="status" aria-live="polite" className="flex items-center gap-2 text-[var(--muted-foreground)] text-xs">
+            <div className="flex items-center gap-1">
+              <Diya lit={true} size="sm" />
+              <Diya lit={true} size="sm" />
+              <Diya lit={true} size="sm" />
+            </div>
             <span>Consulting celebration assistant...</span>
           </div>
         )}
         {errorMsg && (
-          <div role="alert" className="p-2 text-xs rounded-md bg-rose-50 text-rose-800 border border-rose-300">
+          <div role="alert" className="p-2 text-xs rounded-md bg-[var(--surface-muted)] text-[var(--vermilion)] border border-[var(--vermilion)]">
             {errorMsg}
           </div>
         )}
       </div>
 
-      <form onSubmit={handleSend} className="p-3 border-t border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/50 flex gap-2">
+      <form onSubmit={handleSend} className="p-3 border-t border-[var(--border)] bg-[var(--card)] flex gap-2">
         <label htmlFor="assistant-input" className="sr-only">Message the planning assistant</label>
         <input
           id="assistant-input"
@@ -130,12 +137,12 @@ export function AssistantChat({ plan, onUpdatePlan }: Props) {
           placeholder="Ask for ideas, budget adjustments, or vendor advice..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 px-3 py-2 text-sm rounded-md border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-600"
+          className="flex-1 px-3 py-2 text-sm rounded-md border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="min-h-[44px] min-w-[44px] px-4 py-2 rounded-md bg-amber-700 text-amber-50 hover:bg-amber-800 disabled:opacity-50 transition-colors flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-amber-600"
+          className="min-h-[44px] min-w-[44px] px-4 py-2 rounded-md bg-[var(--accent)] text-[var(--accent-foreground)] hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
         >
           <Send className="w-4 h-4" aria-hidden="true" />
         </button>
@@ -143,4 +150,3 @@ export function AssistantChat({ plan, onUpdatePlan }: Props) {
     </div>
   );
 }
-

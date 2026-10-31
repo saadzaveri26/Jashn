@@ -18,7 +18,7 @@ export function WizardStepPrios({
 }: Props) {
   return (
     <div className="space-y-4">
-      <h2 ref={headingRef} tabIndex={-1} className="text-xl font-serif text-stone-900 dark:text-stone-50 outline-none">
+      <h2 ref={headingRef} tabIndex={-1} className="text-xl font-serif text-[var(--foreground)] outline-none">
         Priority Categories (Optional, pick up to 3)
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -29,20 +29,19 @@ export function WizardStepPrios({
               key={c.id}
               type="button"
               onClick={() => onTogglePrio(c.id)}
-              className={`min-h-[44px] p-2.5 text-xs font-medium rounded-md border transition-all text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-amber-600 ${
+              className={`min-h-[44px] p-2.5 text-xs font-medium rounded-md border transition-all text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-[var(--ring)] ${
                 selected
-                  ? "bg-amber-100 border-amber-400 text-amber-950 dark:bg-amber-950 dark:text-amber-100"
-                  : "border-stone-200 dark:border-stone-800 text-stone-700 dark:text-stone-300"
+                  ? "bg-[var(--surface-muted)] border-[var(--accent)] text-[var(--foreground)]"
+                  : "border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
               }`}
             >
               <span>{c.label}</span>
-              {selected && <Check className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" aria-hidden="true" />}
+              {selected && <Check className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />}
             </button>
           );
         })}
       </div>
-      {error && <div role="alert" className="text-xs text-rose-600">{error}</div>}
+      {error && <div role="alert" className="text-xs text-[var(--vermilion)] font-medium">{error}</div>}
     </div>
   );
 }
-

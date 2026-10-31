@@ -17,7 +17,7 @@ export function PlanNav() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Plan sections" className="border-b border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/50 backdrop-blur-xs">
+    <nav aria-label="Plan sections" className="border-b border-[var(--border)] bg-[var(--card)]/80 backdrop-blur-xs">
       <div className="max-w-6xl mx-auto px-4 flex gap-1 overflow-x-auto py-2">
         {links.map((link) => {
           const isActive = pathname === link.href;
@@ -26,10 +26,10 @@ export function PlanNav() {
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center gap-2 px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-md whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-amber-600 ${
+              className={`flex items-center gap-2 px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-md whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--ring)] ${
                 isActive
-                  ? "bg-amber-100/70 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200"
-                  : "text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+                  ? "bg-[var(--surface-muted)] text-[var(--accent)] font-semibold"
+                  : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
               }`}
               aria-current={isActive ? "page" : undefined}
             >
@@ -42,4 +42,3 @@ export function PlanNav() {
     </nav>
   );
 }
-

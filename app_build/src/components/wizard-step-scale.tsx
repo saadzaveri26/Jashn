@@ -21,12 +21,14 @@ export function WizardStepScale({
 }: Props) {
   return (
     <div className="space-y-4">
-      <h2 ref={headingRef} tabIndex={-1} className="text-xl font-serif text-stone-900 dark:text-stone-50 outline-none">
+      <h2 ref={headingRef} tabIndex={-1} className="text-xl font-serif text-[var(--foreground)] outline-none">
         Scale & Budget
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label htmlFor="w-guests" className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">Guest Count</label>
+          <label htmlFor="w-guests" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+            Guest Count
+          </label>
           <input
             id="w-guests"
             type="number"
@@ -34,16 +36,18 @@ export function WizardStepScale({
             max={10000}
             value={guests}
             onChange={(e) => onChangeGuests(Number(e.target.value))}
-            className="w-full px-3 py-2 rounded-md border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-600"
+            className="w-full px-3 py-2 rounded-md border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           />
         </div>
         <div>
-          <label htmlFor="w-tier" className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">City Tier</label>
+          <label htmlFor="w-tier" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+            City Tier
+          </label>
           <select
             id="w-tier"
             value={tier}
             onChange={(e) => onChangeTier(e.target.value as CityTier)}
-            className="w-full px-3 py-2 rounded-md border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-600"
+            className="w-full px-3 py-2 rounded-md border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           >
             <option value="tier-1">Tier 1 (Metro / Major City)</option>
             <option value="tier-2">Tier 2 (Regional Capital)</option>
@@ -51,7 +55,9 @@ export function WizardStepScale({
           </select>
         </div>
         <div className="sm:col-span-2">
-          <label htmlFor="w-budget" className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">Total Budget (₹)</label>
+          <label htmlFor="w-budget" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+            Total Budget (₹)
+          </label>
           <input
             id="w-budget"
             type="number"
@@ -59,11 +65,10 @@ export function WizardStepScale({
             step={5000}
             value={budgetRupees}
             onChange={(e) => onChangeBudget(Number(e.target.value))}
-            className="w-full px-3 py-2 rounded-md border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-600"
+            className="w-full px-3 py-2 rounded-md border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           />
         </div>
       </div>
     </div>
   );
 }
-

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, RefreshCw } from "lucide-react";
+import { motion } from "framer-motion";
+import { RefreshCw } from "lucide-react";
 import { IdeaCard } from "@/components/idea-card";
 import { usePlan } from "@/hooks/use-plan";
 
@@ -44,13 +45,18 @@ export default function PlanIdeasPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="space-y-6"
+    >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900 dark:text-stone-50">
+          <h1 className="text-2xl font-serif font-bold text-[var(--foreground)]">
             Personalized Celebration Ideas
           </h1>
-          <p className="text-xs text-stone-500 dark:text-stone-400">
+          <p className="text-xs text-[var(--muted-foreground)]">
             Creative touches categorized by relative cost bands and matched with category allocations.
           </p>
         </div>
@@ -58,7 +64,7 @@ export default function PlanIdeasPage() {
           type="button"
           onClick={handleEnrich}
           disabled={loading}
-          className="min-h-[44px] px-4 py-2 text-xs font-medium rounded-md bg-amber-700 text-amber-50 hover:bg-amber-800 disabled:opacity-50 transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600 self-start sm:self-center font-semibold"
+          className="min-h-[44px] px-4 py-2 text-xs font-semibold rounded-md bg-[var(--accent)] text-[var(--accent-foreground)] hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[var(--ring)] self-start sm:self-center"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} aria-hidden="true" />
           <span>{loading ? "Generating Ideas..." : "Refresh AI Ideas"}</span>
@@ -66,7 +72,7 @@ export default function PlanIdeasPage() {
       </div>
 
       {error && (
-        <div role="alert" className="p-3 text-xs rounded-md bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300">
+        <div role="alert" className="p-3 text-xs rounded-md bg-[var(--surface-muted)] text-[var(--vermilion)] border border-[var(--vermilion)]">
           {error}
         </div>
       )}
@@ -74,10 +80,9 @@ export default function PlanIdeasPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" aria-label="Celebration ideas grid">
         {plan.ideas.map((idea, idx) => {
           const alloc = plan.allocations.find((a) => a.categoryId === idea.categoryId);
-          return <IdeaCard key={idx} idea={idea} allocation={alloc} />;
+          return <IdeaCard key={idx} index={idx} idea={idea} allocation={alloc} />;
         })}
       </div>
-    </div>
+    </motion.div>
   );
 }
-

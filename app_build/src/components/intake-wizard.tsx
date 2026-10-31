@@ -8,6 +8,7 @@ import { getPreset } from "@/engine/presets";
 import { buildTimeline } from "@/engine/timeline";
 import type { CityTier, Intake, Plan, PresetId } from "@/engine/schemas";
 import { setStoredPlan } from "@/lib/storage";
+import { Diya } from "@/components/motifs";
 import { WizardStepPreset } from "./wizard-step-preset";
 import { WizardStepDetails } from "./wizard-step-details";
 import { WizardStepScale } from "./wizard-step-scale";
@@ -73,51 +74,64 @@ export function IntakeWizard() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-stone-900 rounded-xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-6">
-      <div className="flex items-center justify-between text-xs text-stone-500 border-b border-stone-100 dark:border-stone-800 pb-3">
-        <span>Step {step} of 4</span>
-        <span>{preset.toUpperCase()}</span>
+    <div className="max-w-2xl mx-auto p-6 sm:p-8 bg-[var(--card)] rounded-xl border border-[var(--border)] shadow-xs space-y-6">
+      <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
+        <div className="flex items-center gap-3">
+          {[1, 2, 3, 4].map((s) => (
+            <div key={s} className="flex items-center gap-1.5">
+              <Diya lit={step >= s} size="sm" />
+              <span className={`text-xs font-medium ${step >= s ? "text-[var(--foreground)]" : "text-[var(--muted-foreground)]"}`}>
+                {s}
+              </span>
+            </div>
+          ))}
+        </div>
+        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--accent)]">
+          {preset}
+        </span>
       </div>
 
-      {step === 1 && (
-        <WizardStepPreset
-          preset={preset}
-          onSelect={(p) => { setPreset(p); setPrios([]); }}
-          headingRef={headingRef}
-        />
-      )}
+      <div key={step}>
+        {step === 1 && (
+            <WizardStepPreset
+              preset={preset}
+              onSelect={(p) => { setPreset(p); setPrios([]); }}
+              headingRef={headingRef}
+            />
+          )}
 
-      {step === 2 && (
-        <WizardStepDetails
-          name={name}
-          date={date}
-          onChangeName={setName}
-          onChangeDate={setDate}
-          headingRef={headingRef}
-        />
-      )}
+          {step === 2 && (
+            <WizardStepDetails
+              name={name}
+              date={date}
+              onChangeName={setName}
+              onChangeDate={setDate}
+              headingRef={headingRef}
+            />
+          )}
 
-      {step === 3 && (
-        <WizardStepScale
-          guests={guests}
-          tier={tier}
-          budgetRupees={budgetRupees}
-          onChangeGuests={setGuests}
-          onChangeTier={setTier}
-          onChangeBudget={setBudgetRupees}
-          headingRef={headingRef}
-        />
-      )}
+          {step === 3 && (
+            <WizardStepScale
+              guests={guests}
+              tier={tier}
+              budgetRupees={budgetRupees}
+              onChangeGuests={setGuests}
+              onChangeTier={setTier}
+              onChangeBudget={setBudgetRupees}
+              headingRef={headingRef}
+            />
+          )}
 
-      {step === 4 && (
-        <WizardStepPrios
-          presetData={presetData}
-          prios={prios}
-          onTogglePrio={togglePrio}
-          error={error}
-          headingRef={headingRef}
-        />
-      )}
+          {step === 4 && (
+            <WizardStepPrios
+              presetData={presetData}
+              prios={prios}
+              onTogglePrio={togglePrio}
+              error={error}
+              headingRef={headingRef}
+            />
+          )}
+        </div>
 
       <WizardNav
         step={step}

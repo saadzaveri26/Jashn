@@ -46,8 +46,8 @@ export function TaskList({ plan, onUpdatePlan }: Props) {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleAddTask} className="p-4 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/50 space-y-3">
-        <h3 className="text-sm font-medium text-stone-900 dark:text-stone-100">Add Custom Timeline Task</h3>
+      <form onSubmit={handleAddTask} className="p-4 rounded-lg border border-[var(--border)] bg-[var(--card)] space-y-3">
+        <h3 className="text-sm font-medium text-[var(--foreground)]">Add Custom Timeline Task</h3>
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
           <div className="sm:col-span-2">
             <label htmlFor="task-title" className="sr-only">Task Title</label>
@@ -57,7 +57,7 @@ export function TaskList({ plan, onUpdatePlan }: Props) {
               placeholder="e.g. Schedule Bridal Trial"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              className="w-full px-3 py-2 text-sm rounded-md border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-600"
+              className="w-full px-3 py-2 text-sm rounded-md border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
               required
             />
           </div>
@@ -67,7 +67,7 @@ export function TaskList({ plan, onUpdatePlan }: Props) {
               id="task-category"
               value={newCat}
               onChange={(e) => setNewCat(e.target.value)}
-              className="w-full px-3 py-2 text-sm rounded-md border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-600"
+              className="w-full px-3 py-2 text-sm rounded-md border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
             >
               {plan.allocations.map((a) => (
                 <option key={a.categoryId} value={a.categoryId}>{a.label}</option>
@@ -76,7 +76,7 @@ export function TaskList({ plan, onUpdatePlan }: Props) {
           </div>
           <button
             type="submit"
-            className="min-h-[44px] px-4 py-2 text-sm font-medium rounded-md bg-amber-700 text-amber-50 hover:bg-amber-800 dark:bg-amber-600 dark:hover:bg-amber-700 transition-colors flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600"
+            className="min-h-[44px] px-4 py-2 text-sm font-semibold rounded-md bg-[var(--accent)] text-[var(--accent-foreground)] hover:opacity-90 transition-opacity flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           >
             <Plus className="w-4 h-4" aria-hidden="true" />
             <span>Add Task</span>
@@ -84,46 +84,47 @@ export function TaskList({ plan, onUpdatePlan }: Props) {
         </div>
       </form>
 
-      <ul className="space-y-2.5" aria-label="Timeline task checklist">
+      <ul className="space-y-3" aria-label="Timeline task checklist">
         {plan.tasks.map((t) => (
           <li
             key={t.id}
-            className={`p-3.5 rounded-lg border transition-all flex items-start justify-between gap-3 ${
+            className={`p-3.5 rounded-lg border transition-all flex items-start gap-3 relative ${
               t.done
-                ? "bg-stone-50 dark:bg-stone-900/40 border-stone-200 dark:border-stone-800 opacity-60"
-                : "bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-2xs"
+                ? "bg-[var(--surface-muted)] border-[var(--border)] opacity-60"
+                : "bg-[var(--card)] border-[var(--border)] shadow-xs"
             }`}
           >
             <button
               type="button"
               onClick={() => handleToggleDone(t.id)}
               aria-label={t.done ? `Mark ${t.title} as incomplete` : `Mark ${t.title} as complete`}
-              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-stone-600 dark:text-stone-400 hover:text-amber-700 dark:hover:text-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-600 rounded-md"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-[var(--muted-foreground)] hover:text-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] rounded-md"
             >
               {t.done ? (
-                <CheckSquare className="w-5 h-5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+                <CheckSquare className="w-5 h-5 text-[var(--leaf)]" aria-hidden="true" />
               ) : (
                 <Square className="w-5 h-5" aria-hidden="true" />
               )}
             </button>
             <div className="flex-1 min-w-0 pt-2">
-              <span className={`text-sm font-medium block truncate ${t.done ? "line-through text-stone-500" : "text-stone-900 dark:text-stone-100"}`}>
+              <span className={`text-sm font-medium block truncate ${t.done ? "line-through text-[var(--muted-foreground)]" : "text-[var(--foreground)]"}`}>
                 {t.title}
               </span>
               <div className="flex flex-wrap items-center gap-2 mt-1">
-                <span className="text-xs text-stone-500 dark:text-stone-400">Due: {formatDate(t.due)}</span>
-                <span className="text-xs px-2 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400">
+                <span className="text-xs text-[var(--muted-foreground)]">Due: {formatDate(t.due)}</span>
+                <span className="text-xs px-2 py-0.5 rounded-sm bg-[var(--surface-muted)] text-[var(--foreground)] font-medium">
                   {plan.allocations.find((a) => a.categoryId === t.categoryId)?.label || t.categoryId}
                 </span>
                 {t.atRisk && (
-                  <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-sm bg-rose-50 text-rose-800 border border-rose-200 dark:bg-rose-950 dark:text-rose-300 dark:border-rose-800 font-medium">
-                    <AlertTriangle className="w-3 h-3 text-rose-600 dark:text-rose-400" aria-hidden="true" />
-                    <span>At Risk (Compressed)</span>
+                  <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-sm bg-[var(--surface-muted)] text-[var(--vermilion)] border border-[var(--vermilion)] font-medium">
+                    <span className="w-2 h-2 rounded-full bg-[var(--vermilion)] animate-pulse" aria-hidden="true" />
+                    <AlertTriangle className="w-3 h-3 text-[var(--vermilion)]" aria-hidden="true" />
+                    <span>At Risk (Compressed Deadline)</span>
                   </span>
                 )}
               </div>
               {t.compressReason && (
-                <p className="text-xs text-rose-700 dark:text-rose-400 mt-1">{t.compressReason}</p>
+                <p className="text-xs text-[var(--vermilion)] mt-1">{t.compressReason}</p>
               )}
             </div>
           </li>
@@ -132,4 +133,3 @@ export function TaskList({ plan, onUpdatePlan }: Props) {
     </div>
   );
 }
-
