@@ -144,11 +144,57 @@ h1, h2, h3, .font-serif {
   font-family: var(--font-serif), Georgia, serif;
 }
 
+@keyframes torana-sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(1.8deg); }
+}
+
+.torana-flag {
+  transform-origin: top center;
+  animation: torana-sway 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes flame-flicker {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.95; }
+  50% { transform: scale(1.06, 0.94) translateY(-1px); opacity: 1; }
+}
+
+.diya-flame {
+  transform-origin: bottom center;
+  animation: flame-flicker 1.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes petal-drift {
+  0% { transform: translate3d(0, -10px, 0) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.75; }
+  85% { opacity: 0.75; }
+  100% { transform: translate3d(25px, 240px, 0) rotate(160deg); opacity: 0; }
+}
+
+.marigold-petal {
+  position: absolute;
+  animation: petal-drift 8s linear infinite;
+  will-change: transform;
+}
+
+.motion-paused .torana-flag,
+.motion-paused .diya-flame,
+.motion-paused .marigold-petal {
+  animation: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .torana-flag,
+  .diya-flame,
+  .marigold-petal {
+    animation: none !important;
   }
 }
